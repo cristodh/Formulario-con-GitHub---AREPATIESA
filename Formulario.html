@@ -7,30 +7,43 @@
 </head>
 <body>
 
-    <h1>Atributos de Producto</h1>
+     <div class="FormularioProducto">
+        
 
+    <form action="">   
+
+           <h1>Atributos de Producto</h1>
+       
     <Label>Nombre del Producto:</Label>
-    <Input class="Producto" type="text"></Input>
+    <Input class="Producto" type="text" id="Producto"></Input>
 
-    <label>Precio:</label>
-    <Input class="Precio" type="number"></Input>
+    <label>Precio en colones:</label>
+    <Input class="Precio" type="number" id="Precio"></Input>
 
     <label>Categoría</label>
-    <select name="Categoría" id="Categoría">
-        <option value="Carnes">Carnes</option>
-        <option value="Vegetales">Vegetales</option>
-        <option value="Electrodomesticos">Electrodomesticos</option>
-        <option value="Articulos_Limpieza">Articulos Limpieza</option>
-        <option value="Juguetes">Juguetes</option>
-        <option value="Ropa">Ropa</option>
+    <select name="Categoría" id="Categoría" class="Categoría">
+        <option value="Seleccionar" id="Seleccionar">Seleccionar</option>
+        <option value="Carnes" id="Carnes">Carnes</option>
+        <option value="Frutas" id="Frutas">Frutas</option>
+        <option value="Vegetales" id="Vegetales">Vegetales</option>
+        <option value="Electrodomesticos" id="Electrodomesticos">Electrodomesticos</option>
+        <option value="Articulos_Limpieza" id="Articulos_Limpieza">Articulos Limpieza</option>
+        <option value="Juguetes" id="Juguetes">Juguetes</option>
+        <option value="Ropa" id="Ropa">Ropa</option>
     </select>
 
     <label>Descripción:</label>
-    <input class="Descripción" type="text" placeholder="Descripción del Producto"></Input>
+    <input class="Descripción" id="Descripción" type="text" placeholder="Descripción del Producto"></Input>
 
     <label>Cantidad disponible:</label>
-    <input class="CantidadDisponible" type="number">
+    <input class="CantidadDisponible" id="CantidadDisponible" type="number" placeholder="minimo 1"><br>
 
-    <button class="AgregarCarrito">Agregar al Carrito</button>   
+    <button class="AgregarCarrito" id="AgregarCarrito">Agregar al Carrito</button>  
+    <img class="Icono" src="Imagenes/carrito-de-compras.png" alt="Icono del carrito">
+    
+    </form>
+   </div>
+
 </body>
+<script src="Formulario.js"></script>
 </html>

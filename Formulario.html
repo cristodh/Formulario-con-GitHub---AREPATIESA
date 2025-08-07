@@ -1,49 +1,51 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Formulario.css">
     <title>Formulario GitHub</title>
 </head>
+
 <body>
 
-     <div class="FormularioProducto">
-        
+    <div class="FormularioProducto">
 
-    <form action="">   
 
-           <h1>Atributos de Producto</h1>
-       
-    <Label>Nombre del Producto:</Label>
-    <Input class="Producto" type="text" id="Producto"></Input>
+        <form action="">
 
-    <label>Precio en colones:</label>
-    <Input class="Precio" type="number" id="Precio"></Input>
+            <h1>Atributos de Producto</h1>
 
-    <label>Categoría</label>
-    <select name="Categoría" id="Categoría" class="Categoría">
-        <option value="Seleccionar" id="Seleccionar">Seleccionar</option>
-        <option value="Carnes" id="Carnes">Carnes</option>
-        <option value="Frutas" id="Frutas">Frutas</option>
-        <option value="Vegetales" id="Vegetales">Vegetales</option>
-        <option value="Electrodomesticos" id="Electrodomesticos">Electrodomesticos</option>
-        <option value="Articulos_Limpieza" id="Articulos_Limpieza">Articulos Limpieza</option>
-        <option value="Juguetes" id="Juguetes">Juguetes</option>
-        <option value="Ropa" id="Ropa">Ropa</option>
-    </select>
+            <Label>Nombre del Producto:</Label>
+            <Input class="Producto" type="text" id="Producto"></Input>
 
-    <label>Descripción:</label>
-    <input class="Descripción" id="Descripción" type="text" placeholder="Descripción del Producto"></Input>
+            <label>Precio en colones:</label>
+            <Input class="Precio" type="number" id="Precio"></Input>
 
-    <label>Cantidad disponible:</label>
-    <input class="CantidadDisponible" id="CantidadDisponible" type="number" placeholder="minimo 1"><br>
+            <label>Categoría</label>
+            <select name="Categoría" id="categoría" class="Categoría">
+                <option value="Seleccionar" id="celeccionar">Seleccionar</option>
+                <option value="Carnes" id="carnes">Carnes</option>
+                <option value="Frutas" id="frutas">Frutas</option>
+                <option value="Vegetales" id="vegetales">Vegetales</option>
+                <option value="Electrodomesticos" id="electrodomesticos">Electrodomesticos</option>
+                <option value="Articulos_Limpieza" id="articulosLimpieza">Articulos Limpieza</option>
+                <option value="Juguetes" id="juguetes">Juguetes</option>
+                <option value="Ropa" id="ropa">Ropa</option>
+            </select>
 
-    <button class="AgregarCarrito" id="AgregarCarrito">Agregar al Carrito</button>  
-    <img class="Icono" src="Imagenes/carrito-de-compras.png" alt="Icono del carrito">
-    
-    </form>
-   </div>
+            <label>Descripción:</label>
+            <input class="Descripción" id="descripción" type="text" placeholder="Descripción del Producto"></Input>
 
+            <label>Cantidad disponible:</label>
+            <input class="CantidadDisponible" id="cantidadDisponible" type="number" placeholder="minimo 1"><br>
+
+            <button class="AgregarCarrito" id="agregarCarrito">Agregar al Carrito</button>
+            <img class="Icono" src="Imagenes/carrito-de-compras.png" alt="Icono del carrito">
+
+        </form>
+    </div>
+    <script src="Formulario.js"></script>
 </body>
-<script src="Formulario.js"></script>
+
 </html>

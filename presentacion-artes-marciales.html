@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artes Marciales - Presentación Interactiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            opacity: 0;
+            transform: translateX(100%) rotateY(45deg);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0) rotateY(0deg);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            display: flex;
+            transform: translateX(-100%) rotateY(-45deg);
+            opacity: 0;
+        }
+
+        /* Slide de Portada */
+        .slide-portada {
+            background: linear-gradient(135deg, #1a1a1a 0%, #8B0000 100%);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide-portada h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 0 30px rgba(255, 0, 0, 0.3); }
+            to { text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.5); }
+        }
+
+        .slide-portada h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-top: 1rem;
+            opacity: 0.9;
+        }
+
+        .martial-arts-icons {
+            display: flex;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .icon-3d {
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            transform-style: preserve-3d;
+            animation: float 3s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .icon-3d:nth-child(1) { animation-delay: 0s; }
+        .icon-3d:nth-child(2) { animation-delay: 0.5s; }
+        .icon-3d:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(180deg); }
+        }
+
+        /* Slides de Contenido */
+        .slide-content {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .content-left {
+            padding: 2rem;
+        }
+
+        .content-left h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            color: #ff4444;
+            text-shadow: 2px 2px 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .content-left h3 {
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #ffaa00;
+            font-family: 'Bebas Neue', cursive;
+        }
+
+        .content-left p, .content-left ul {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .content-left ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .content-left ul li:before {
+            content: "▸ ";
+            color: #ff4444;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .content-right {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .image-3d {
+            width: 100%;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            transform-style: preserve-3d;
+            animation: rotate3d 10s linear infinite;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 68, 68, 0.3);
+            box-shadow: 0 20px 60px rgba(255, 68, 68, 0.3);
+        }
+
+        @keyframes rotate3d {
+            0% { transform: rotateY(0deg) rotateX(0deg); }
+            50% { transform: rotateY(180deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(0deg); }
+        }
+
+        .video-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 68, 68, 0.3);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Slide de Conclusión */
+        .slide-conclusion {
+            background: linear-gradient(135deg, #8B0000 0%, #000 100%);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem;
+        }
+
+        .slide-conclusion h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 5rem;
+            margin-bottom: 3rem;
+            color: #fff;
+        }
+
+        .slide-conclusion p {
+            font-size: 1.8rem;
+            line-height: 2;
+            max-width: 1200px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Controles de Navegación */
+        .controls {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            z-index: 1000;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: rgba(255, 68, 68, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .btn:hover {
+            background: rgba(255, 68, 68, 1);
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255, 68, 68, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 68, 68, 0.3);
+            z-index: 1000;
+        }
+
+        /* Efectos especiales */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 68, 68, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 3s linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+
+            .slide-portada h1 {
+                font-size: 4rem;
+            }
+
+            .martial-arts-icons {
+                gap: 2rem;
+            }
+
+            .icon-3d {
+                width: 100px;
+                height: 100px;
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Portada -->
+        <div class="slide slide-portada active">
+            <h1>Artes Marciales</h1>
+            <h2>Un Viaje por la Disciplina y el Combate</h2>
+            <div class="martial-arts-icons">
+                <div class="icon-3d">🥋</div>
+                <div class="icon-3d">🥊</div>
+                <div class="icon-3d">🤼</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Kyokushin Karate - ¿Qué es? -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kyokushin Karate</h2>
+                <h3>¿Qué es?</h3>
+                <p>El Kyokushin Karate es un estilo de karate de contacto completo fundado en 1964. Se caracteriza por su énfasis en el combate real, la resistencia física y mental, y su filosofía de superación personal.</p>
+                <p>Es conocido como "El Karate Más Fuerte" debido a su entrenamiento riguroso y sus combates de contacto completo sin protecciones en el torso.</p>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🥋</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4JOqYz_PgFk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Kyokushin Karate - Fundador y Filosofía -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kyokushin Karate</h2>
+                <h3>Fundador</h3>
+                <p><strong>Masutatsu Oyama (1923-1994)</strong> - Maestro coreano-japonés que dedicó su vida al desarrollo del karate. Famoso por sus demostraciones de fuerza, incluyendo combates contra toros.</p>
+                <h3>Filosofía</h3>
+                <ul>
+                    <li>La cabeza baja (humildad)</li>
+                    <li>Los ojos altos (ambición)</li>
+                    <li>La boca cerrada (discreción)</li>
+                    <li>La base firme (preparación)</li>
+                    <li>El espíritu vivo (determinación)</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🐉</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4_uJi5Qy-Ow" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Kyokushin Karate - Combate y Entrenamiento -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kyokushin Karate</h2>
+                <h3>El Combate</h3>
+                <p>Combate de contacto completo sin protecciones en el torso. Prohibidos los golpes a la cara con las manos, pero permitidos con las piernas. Énfasis en técnicas de pierna, rodilla y puño.</p>
+                <h3>Entrenamiento y Vida Diaria</h3>
+                <ul>
+                    <li>Katas (formas) tradicionales</li>
+                    <li>Kumite (combate) intenso</li>
+                    <li>Tameshiwari (rompimiento)</li>
+                    <li>Meditación y disciplina mental</li>
+                    <li>100 combates consecutivos (prueba suprema)</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">⚡</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4_0rVJ2Z0_8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Kyokushin Karate - Influencia Mundial -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kyokushin Karate</h2>
+                <h3>Influencia Mundial</h3>
+                <p>Con más de 12 millones de practicantes en 120 países, el Kyokushin ha influenciado profundamente las artes marciales modernas.</p>
+                <ul>
+                    <li>Base para el K-1 y kickboxing japonés</li>
+                    <li>Influencia en MMA moderno</li>
+                    <li>Campeonatos mundiales desde 1975</li>
+                    <li>Formación de campeones legendarios</li>
+                    <li>Filosofía adoptada por militares y policías</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🌍</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/sKZN115n6DM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Kickboxing - ¿Qué es? -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kickboxing</h2>
+                <h3>¿Qué es?</h3>
+                <p>El Kickboxing es un deporte de combate que combina técnicas de boxeo con patadas del karate. Surgió en los años 60-70 como una fusión de artes marciales orientales y occidentales.</p>
+                <p>Se practica en un ring y permite golpes de puño y pierna, con diferentes variantes según las reglas (japonés, americano, holandés, etc.).</p>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🥊</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Y0E_OgJbqnE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Kickboxing - Fundador y Filosofía -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kickboxing</h2>
+                <h3>Fundador</h3>
+                <p><strong>Osamu Noguchi</strong> (Japón) - Promotor que organizó el primer evento de kickboxing en 1966, fusionando Muay Thai con Karate.</p>
+                <p>También influenciado por <strong>Jan Plas</strong> (Holanda) quien desarrolló el estilo holandés en los años 70.</p>
+                <h3>Filosofía</h3>
+                <ul>
+                    <li>Eficiencia en el combate</li>
+                    <li>Adaptabilidad técnica</li>
+                    <li>Condición física suprema</li>
+                    <li>Respeto al oponente</li>
+                    <li>Evolución constante</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">💪</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Kd_oBd5DpFk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Kickboxing - Combate y Entrenamiento -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kickboxing</h2>
+                <h3>El Combate</h3>
+                <p>Combates en ring con guantes, protecciones y rounds cronometrados. Permitidos golpes de puño, patadas altas, medias y bajas. Según la modalidad, pueden permitirse rodillas y barridos.</p>
+                <h3>Entrenamiento y Vida Diaria</h3>
+                <ul>
+                    <li>Trabajo de saco y pads</li>
+                    <li>Sparring técnico y duro</li>
+                    <li>Cardio intensivo (running, salto)</li>
+                    <li>Fortalecimiento muscular</li>
+                    <li>Dieta estricta para peso de combate</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🔥</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/8wsjXD5LGvI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Kickboxing - Influencia Mundial -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>Kickboxing</h2>
+                <h3>Influencia Mundial</h3>
+                <p>El kickboxing se ha convertido en uno de los deportes de combate más populares globalmente, con organizaciones como Glory, K-1 y ONE Championship.</p>
+                <ul>
+                    <li>Deporte olímpico en consideración</li>
+                    <li>Base del striking en MMA</li>
+                    <li>Fitness y defensa personal popular</li>
+                    <li>Escuela holandesa dominante mundial</li>
+                    <li>Millones de practicantes recreativos</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🏆</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/hZHNbg8dYBo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: MMA - ¿Qué es? -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>MMA (Artes Marciales Mixtas)</h2>
+                <h3>¿Qué es?</h3>
+                <p>Las MMA son un deporte de combate de contacto completo que permite una amplia variedad de técnicas de lucha, incluyendo golpes, patadas, rodillas, codos, derribos, sumisiones y control en el suelo.</p>
+                <p>Combina múltiples disciplinas: boxeo, kickboxing, muay thai, jiu-jitsu brasileño, lucha libre, judo y más.</p>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🤼</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Uh9l58GUZNc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: MMA - Fundadores y Filosofía -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>MMA</h2>
+                <h3>Fundadores</h3>
+                <p><strong>Familia Gracie</strong> (Brasil) - Pioneros del Jiu-Jitsu brasileño y creadores del UFC en 1993.</p>
+                <p><strong>Bruce Lee</strong> - Filosofía del Jeet Kune Do: "Absorbe lo útil, rechaza lo inútil".</p>
+                <h3>Filosofía</h3>
+                <ul>
+                    <li>Combate sin límites de estilo</li>
+                    <li>Eficiencia sobre tradición</li>
+                    <li>Adaptabilidad total</li>
+                    <li>Humildad ante el aprendizaje</li>
+                    <li>El mejor luchador es completo</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🦁</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VPDg25RWyO0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: MMA - Combate y Entrenamiento -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>MMA</h2>
+                <h3>El Combate</h3>
+                <p>Combates en jaula octagonal o ring. Permitidos golpes de pie y suelo, derribos, sumisiones. Prohibidos: golpes a la nuca, dedos en ojos, mordidas, cabezazos.</p>
+                <h3>Entrenamiento y Vida Diaria</h3>
+                <ul>
+                    <li>Múltiples sesiones diarias</li>
+                    <li>Striking (boxeo, kickboxing, muay thai)</li>
+                    <li>Grappling (jiu-jitsu, lucha)</li>
+                    <li>Cardio extremo y fuerza</li>
+                    <li>Nutrición y recuperación científica</li>
+                    <li>Psicología deportiva</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">⚔️</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/ujjBiQXW8a8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: MMA - Influencia Mundial -->
+        <div class="slide slide-content">
+            <div class="content-left">
+                <h2>MMA</h2>
+                <h3>Influencia Mundial</h3>
+                <p>Las MMA se han convertido en uno de los deportes de más rápido crecimiento en el mundo, con el UFC valorado en más de $10 mil millones.</p>
+                <ul>
+                    <li>Deporte global con eventos en 6 continentes</li>
+                    <li>Revolucionó las artes marciales tradicionales</li>
+                    <li>Influencia en entrenamiento militar y policial</li>
+                    <li>Estrellas globales como McGregor, Rousey, GSP</li>
+                    <li>Cambió la percepción de efectividad marcial</li>
+                </ul>
+            </div>
+            <div class="content-right">
+                <div class="image-3d">🌟</div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/WCYVIPlBt0s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Conclusión -->
+        <div class="slide slide-conclusion">
+            <h2>Conclusión</h2>
+            <p>El Kyokushin Karate, el Kickboxing y las MMA representan la evolución de las artes marciales desde la tradición hasta la modernidad.</p>
+            <p>Cada disciplina aporta valores únicos: la disciplina férrea del Kyokushin, la eficiencia técnica del Kickboxing, y la completitud del MMA.</p>
+            <p>Todas comparten principios fundamentales: respeto, superación personal, dedicación y la búsqueda constante de la excelencia.</p>
+            <div class="martial-arts-icons" style="margin-top: 3rem;">
+                <div class="icon-3d">🥋</div>
+                <div class="icon-3d">🥊</div>
+                <div class="icon-3d">🤼</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">14</span>
+    </div>
+
+    <div class="controls">
+        <button class="btn" id="prev-btn">◀ Anterior</button>
+        <button class="btn" id="next-btn">Siguiente ▶</button>
+    </div>
+
+    <script>
+        // Crear partículas de fondo
+        function createParticles() {
+            const presentation = document.querySelector('.presentation');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                presentation.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Navegación de slides
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentSlideSpan = document.getElementById('current-slide');
+        const totalSlidesSpan = document.getElementById('total-slides');
+
+        totalSlidesSpan.textContent = totalSlides;
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            currentSlideSpan.textContent = currentSlide + 1;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Inicializar
+        updateSlide();
+    </script>
+</body>
+</html>
